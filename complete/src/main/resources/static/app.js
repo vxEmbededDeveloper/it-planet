@@ -9,17 +9,19 @@ function setConnected(connected) {
     else {
         $("#conversation").hide();
     }
-    $("#greetings").html("");
+    $("#coordinates").html("");
 }
 
+
 function connect() {
-    var socket = new SockJS('/gs-guide-websocket');
+    var socket = new SockJS('/hockey');
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
         setConnected(true);
         console.log('Connected: ' + frame);
-        stompClient.subscribe('/topic/greetings', function (greeting) {
-            showGreeting(JSON.parse(greeting.body).content);
+        stompClient.subscribe('/player/move', function (coordinates) {
+            const parse = JSON.parse(coordinates.body);
+            showCoordinate(parse.xposition, parse.yposition);
         });
     });
 }
@@ -33,11 +35,11 @@ function disconnect() {
 }
 
 function sendName() {
-    stompClient.send("/app/hello", {}, JSON.stringify({'name': $("#name").val()}));
+    stompClient.send("/server/hockey", {}, JSON.stringify({'id': $("#name").val()}));
 }
 
-function showGreeting(message) {
-    $("#greetings").append("<tr><td>" + message + "</td></tr>");
+function showCoordinate(x, y) {
+    $("#coordinates").append(`<tr><td>${x} ${y}</td></tr>`);
 }
 
 $(function () {

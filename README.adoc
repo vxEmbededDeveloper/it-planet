@@ -53,7 +53,7 @@ The service will accept messages containing a name in a STOMP message whose body
 
 To model the message carrying the name, you can create a plain old Java object with a `name` property and a corresponding `getName()` method:
 
-`src/main/java/hello/HelloMessage.java`
+`src/main/java/hokkey/HelloMessage.java`
 [source,java]
 ----
 include::complete/src/main/java/hello/HelloMessage.java[]

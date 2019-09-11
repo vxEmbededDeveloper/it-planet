@@ -1,4 +1,4 @@
-package hello;
+package hockey;
 
 import static org.junit.Assert.*;
 
@@ -66,12 +66,12 @@ public class GreetingIntegrationTests {
                 session.subscribe("/topic/greetings", new StompFrameHandler() {
                     @Override
                     public Type getPayloadType(StompHeaders headers) {
-                        return Greeting.class;
+                        return PlayerId.class;
                     }
 
                     @Override
                     public void handleFrame(StompHeaders headers, Object payload) {
-                        Greeting greeting = (Greeting) payload;
+                        PlayerId greeting = (PlayerId) payload;
                         try {
                             assertEquals("Hello, Spring!", greeting.getContent());
                         } catch (Throwable t) {
@@ -83,7 +83,7 @@ public class GreetingIntegrationTests {
                     }
                 });
                 try {
-                    session.send("/app/hello", new HelloMessage("Spring"));
+                    session.send("/app/hello", new Message("Spring"));
                 } catch (Throwable t) {
                     failure.set(t);
                     latch.countDown();

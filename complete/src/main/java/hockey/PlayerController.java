@@ -10,7 +10,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 
 @Controller
-
 public class PlayerController {
     @Autowired
     Config config;
@@ -26,14 +25,5 @@ public class PlayerController {
             return hokkeyPlayer.getPosition();
         else
             return Coordinate.builder().yPosition(0).xPosition(0).build();
-    }
-    @SendTo("/player/move")
-    public Coordinate sheddulerPositioning(){
-        return hokkeyPlayer.getPosition();
-    }
-
-    @Scheduled(fixedRate = 1000)
-    public void heartBeat() {
-        sheddulerPositioning();
     }
 }
